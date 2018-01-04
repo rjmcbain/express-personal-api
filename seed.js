@@ -32,7 +32,8 @@ var new_videogames = [
 
 //removing all videogames from the list before seeding again
 db.Videogames.remove({}, function(err, videogames){
-	if(err){console.log('Experienced a problem removing ',err);}
+	if(err)
+		{console.log('Experienced a problem removing ',err);}
 	else{
 		db.Videogames.create(new_videogames, function(err, myVideogames){
 			if(err){return console.log('No problems ', err);}

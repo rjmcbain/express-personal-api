@@ -34,7 +34,28 @@ app.get('/api/profile', function(req, res){
   });
  });
 
+ app.get('/api/videogames/:id', function(req, res){
+  db.Videogames.findById(req.params.id, function(err, videogames){
+    if(err){res.send("error finding videogames", err);}
+    res.json(videogames);
+  });
+ });
 
+ app.post('/api/videogames', function(req, res){
+  db.Videogames.create(req.body, function(err, videogames){
+    if(err){res.send("error creating videogames", err);}
+    res.json(videogames);
+  });
+ });
+
+  app.put('/api/videogames/:id', function(req, res){
+  db.Videogames.findOne({_id:req.params.id},function(err, videogames){
+    if(err){res.send("error updating videogames", err);}
+    if(req.body.make){videogames.make = req.body.make;}
+    if(req.body.model){videogames.model = req.body.model;}
+    res.json(videogames);
+  });
+ });
 
 // Serve static files from the `/public` directory:
 // i.e. `/images`, `/scripts`, `/styles`

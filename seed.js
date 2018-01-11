@@ -1,11 +1,12 @@
 // This file allows us to seed our application with data
 // simply run: `node seed.js` from the root of this project folder.
-
+var express = require('express');
 var db = require('./models');
+var app = express();
 
 var new_videogames = [
 {
-	title:"Mario Brother" ,
+	title:"Mario Brothers" ,
 	console:"NES" ,
 	year: 1985,
 	multiplayer: true,

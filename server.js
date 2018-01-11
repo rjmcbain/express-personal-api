@@ -42,20 +42,46 @@ app.get('/api/profile', function(req, res){
  });
 
  app.post('/api/videogames', function(req, res){
-  db.Videogames.create(req.body, function(err, videogames){
+  db.Videogames.create(
+    { title: req.body.title,
+      console: req.body.console,
+      multiplayer: req.body.multiplayer,
+      year: req.body.year
+    }, function(err, videogames){
     if(err){res.send("error creating videogames", err);}
     res.json(videogames);
   });
  });
 
-  app.put('/api/videogames/:id', function(req, res){
-  db.Videogames.findOne({_id:req.params.id},function(err, videogames){
-    if(err){res.send("error updating videogames", err);}
-    if(req.body.make){videogames.make = req.body.make;}
-    if(req.body.model){videogames.model = req.body.model;}
-    res.json(videogames);
+app.put('/api/videogames/:id', function(req, res){
+  db.Videogames.findById(req.params.id, function(err, updateVideogames){
+    if(err)
+      res.json("error.",err);
+    if(updateVideogames)
+      console.log(updateVideogames);
+      updateVideogames.title = req.body.title;
+      updateVideogames.console = req.body.console;
+      updateVideogames.mutltiplayer = req.body.mutltiplayer;
+      updateVideogames.year = req.body.year;
+
+      updateVideogames.save(function (err, updateVideogames) {
+          if (err) return handleError(err);
+          res.json(updateVideogames);
+        });
+    });
+}); 
+
+app.delete('/api/videogames/:id', function(req, res){
+  db.Videogames.remove({_id: req.params.id},function(err, deleteVideogames){
+    if(err){res.send("error.",err);}
+    res.json(deleteVideogames);
+    if(deleteVideogames);
+      console.log(deleteVideogames);
+      deleteVideogames.delete(function(err, deleteVideogames){
+        res.json(deleteVideogames);
+      });
   });
- });
+});
 
 // Serve static files from the `/public` directory:
 // i.e. `/images`, `/scripts`, `/styles`
